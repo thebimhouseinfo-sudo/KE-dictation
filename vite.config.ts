@@ -4,7 +4,7 @@ import path from 'path';
 import {defineConfig} from 'vite';
 
 export default defineConfig({
-  base: '/', // Changed from '/KE-dictation/' for local development
+  base: '/KE-dictation/',
   plugins: [react(), tailwindcss()],
   resolve: {
     alias: {
