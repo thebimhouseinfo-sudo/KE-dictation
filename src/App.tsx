@@ -115,7 +115,7 @@ export default function App() {
   useEffect(() => {
     const fetchLessons = async () => {
       try {
-        const res = await fetch('/lessons.json');
+        const res = await fetch('lessons.json');
         if (res.ok) {
           const data = await res.json();
           if (Array.isArray(data)) {
@@ -172,8 +172,8 @@ export default function App() {
                 const s = item.sentencesMap[k];
                 return {
                   text: s.textText,
-                  audioClear: s.plainFile ? `/audio/${s.plainFile}` : undefined,
-                  audioWithPunc: s.punctFile ? `/audio/${s.punctFile}` : undefined
+                  audioClear: s.plainFile ? `audio/${s.plainFile}` : undefined,
+                  audioWithPunc: s.punctFile ? `audio/${s.punctFile}` : undefined
                 };
               });
 
@@ -343,7 +343,7 @@ export default function App() {
       if (customAudioPath) {
         audio.src = customAudioPath;
       } else {
-        const audioUrl = `/api/tts-proxy?text=${encodeURIComponent(text)}${speed ? `&speed=${speed}` : ''}`;
+        const audioUrl = `api/tts-proxy?text=${encodeURIComponent(text)}${speed ? `&speed=${speed}` : ''}`;
         audio.src = audioUrl;
       }
       
