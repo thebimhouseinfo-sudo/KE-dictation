@@ -4,7 +4,7 @@ import path from 'path';
 import {defineConfig} from 'vite';
 
 export default defineConfig({
-  base: '/KE-dictation/', // Set base path for GitHub Pages deployment
+  base: '/', // Changed from '/KE-dictation/' for local development
   plugins: [react(), tailwindcss()],
   resolve: {
     alias: {
