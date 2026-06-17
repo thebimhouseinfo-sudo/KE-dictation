@@ -1105,7 +1105,7 @@ export default function App() {
       </footer>
 
       {/* Settings Modal */}
-      {showSettings \&\& (
+      {showSettings && (
         <div
           className="fixed inset-0 bg-black/30 backdrop-blur-sm z-50 flex items-center justify-center p-4"
           onClick={() => setShowSettings(false)}
