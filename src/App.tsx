@@ -733,14 +733,14 @@ export default function App() {
                         ))}
                       </div>
                     </div>
-                    <div className="flex flex-col items-center gap-4 w-full">
-                      {countdown > 0 && (
-                        <div className="w-fit bg-indigo-600 text-white px-4 py-1.5 rounded-xl flex flex-col items-center justify-center shadow-lg absolute -top-2 -right-2 z-10">
-                          <span className="text-[8px] lg:text-[10px] font-bold uppercase opacity-70">Nghỉ</span>
-                          <span className="text-lg lg:text-2xl font-black">{countdown}s</span>
-                        </div>
-                      )}
+                    <div className="flex flex-col items-center gap-4 w-full relative">
                       <div className="w-32 h-32 lg:w-40 lg:h-40 bg-white rounded-[40px] lg:rounded-[48px] flex items-center justify-center shadow-xl lg:shadow-2xl shadow-slate-200 relative">
+                        {countdown > 0 && (
+                          <div className="absolute -top-2 -right-2 w-12 h-12 lg:w-16 lg:h-16 bg-indigo-600 text-white rounded-xl lg:rounded-2xl flex flex-col items-center justify-center shadow-lg transform rotate-6 scale-110 z-10">
+                            <span className="text-[8px] lg:text-[10px] font-bold uppercase opacity-70">Nghỉ</span>
+                            <span className="text-lg lg:text-2xl font-black">{countdown}s</span>
+                          </div>
+                        )}
                          <motion.div
                            animate={isDictating ? { scale: [1, 1.15, 1], opacity: [0.6, 1, 0.6] } : {}}
                            transition={{ repeat: Infinity, duration: 1.5 }}
