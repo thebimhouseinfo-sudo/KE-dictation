@@ -1,1 +1,26 @@
 @import "tailwindcss";
+
+@theme {
+  --font-sans: "Quicksand", sans-serif;
+  --font-display: "Baloo 2", sans-serif;
+
+  /* Override toàn bộ thang màu indigo để khớp xanh của trang mẹ */
+  --color-indigo-50: #eef7ff;
+  --color-indigo-100: #dce9ff;
+  --color-indigo-200: #c2d9ff;
+  --color-indigo-300: #a3c4ff;
+  --color-indigo-400: #87b1ff;
+  --color-indigo-500: #7aa8ff;
+  --color-indigo-600: #5b8cff;
+  --color-indigo-700: #4a73d6;
+  --color-indigo-800: #3a5cae;
+  --color-indigo-900: #2c4585;
+}
+
+body {
+  background: linear-gradient(160deg, #eef7ff, #f8fcff);
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+}
