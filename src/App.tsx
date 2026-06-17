@@ -526,39 +526,37 @@ export default function App() {
       <div className="fixed bottom-10 left-12 w-24 h-24 rounded-full bg-[#d7cbff] opacity-30 blur-2xl pointer-events-none" />
       
       {/* Header Section */}
-      <header className="h-20 bg-white border-b border-slate-200 px-4 lg:px-8 flex items-center justify-between shrink-0 relative z-10">
+      <header className="h-20 bg-gradient-to-r from-[#5b8cff] to-[#7aa8ff] px-4 lg:px-8 flex items-center justify-between shrink-0 relative z-10">
         <div className="flex items-center gap-3 lg:gap-4">
           <button
             onClick={() => { setPassage(null); setTopic(''); stopDictation(); }}
-            className="w-10 h-10 rounded-full bg-white shadow-sm border border-slate-100 flex items-center justify-center text-slate-500 hover:text-indigo-600 hover:border-indigo-100 transition-colors"
+            className="w-10 h-10 rounded-full bg-white/20 border border-white/20 flex items-center justify-center text-white hover:bg-white/30 backdrop-blur transition-colors"
             title="Trang chủ"
           >
             <Home className="w-5 h-5" />
           </button>
           <button
             onClick={() => setShowSettings(true)}
-            className="w-10 h-10 rounded-full bg-white shadow-sm border border-slate-100 flex items-center justify-center text-slate-500 hover:text-indigo-600 hover:border-indigo-100 transition-colors"
+            className="w-10 h-10 rounded-full bg-white/20 border border-white/20 flex items-center justify-center text-white hover:bg-white/30 backdrop-blur transition-colors"
             title="Cài đặt"
           >
             <Settings className="w-5 h-5" />
           </button>
-          <div className="flex items-center gap-3 bg-white rounded-2xl shadow-sm border border-slate-100 pl-2 pr-4 py-1.5">
-            <div className="w-9 h-9 lg:w-10 lg:h-10 bg-gradient-to-br from-[#5b8cff] to-[#7aa8ff] rounded-xl flex items-center justify-center shrink-0">
-              <BookOpen className="w-5 h-5 text-white" />
-            </div>
-            <h1 className="font-display text-base lg:text-lg font-bold text-slate-900">
+          <div className="flex flex-col">
+            <h1 className="font-display text-base lg:text-lg font-bold text-white">
               Bé học tiếng Việt
             </h1>
+            <p className="text-xs text-white/80 font-medium">Luyện chính tả & đọc hiểu</p>
           </div>
         </div>
         
         {passage && (
           <div className="flex items-center gap-3 lg:gap-6">
             <div className="hidden sm:flex flex-col items-end">
-              <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Tiến trình</span>
-              <div className="w-24 lg:w-48 h-2 bg-slate-100 rounded-full mt-1 overflow-hidden">
+              <span className="text-[10px] font-bold text-white/80 uppercase tracking-widest">Tiến trình</span>
+              <div className="w-24 lg:w-48 h-2 bg-white/20 rounded-full mt-1 overflow-hidden">
                 <motion.div 
-                  className="h-full bg-indigo-500"
+                  className="h-full bg-white"
                   initial={{ width: 0 }}
                   animate={{ 
                     width: mode === 'dictation' 
@@ -570,11 +568,11 @@ export default function App() {
             </div>
             <button 
               onClick={() => { setPassage(null); setTopic(''); stopDictation(); }}
-              className="p-2 rounded-full hover:bg-slate-100 transition-colors text-slate-400 hover:text-slate-600 flex items-center gap-1.5 focus:outline-none"
+              className="p-2 rounded-full hover:bg-white/20 transition-colors text-white/80 hover:text-white flex items-center gap-1.5 focus:outline-none"
               title="Quay lại danh sách bài học"
             >
               <ChevronLeft className="w-5 h-5 lg:w-6 lg:h-6" />
-              <span className="text-xs font-bold hidden sm:inline text-slate-500">Quay lại</span>
+              <span className="text-xs font-bold hidden sm:inline text-white/90">Quay lại</span>
             </button>
           </div>
         )}
@@ -605,7 +603,7 @@ export default function App() {
                 <motion.div 
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
-                  className="bg-white rounded-[32px] border border-slate-200/85 p-8 shadow-xl shadow-slate-100 relative overflow-hidden"
+                  className="bg-gradient-to-br from-white to-[#f3f8ff] rounded-[32px] border border-slate-200/85 p-8 shadow-xl shadow-slate-100 relative overflow-hidden"
                 >
                   <div className="absolute top-0 right-0 w-32 h-32 bg-indigo-50 rounded-full blur-3xl -mr-16 -mt-16 opacity-50 select-none pointer-events-none" />
                   <div className="absolute bottom-0 left-0 w-32 h-32 bg-purple-50 rounded-full blur-3xl -ml-16 -mb-16 opacity-50 select-none pointer-events-none" />
@@ -645,7 +643,7 @@ export default function App() {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.1 }}
-                  className="bg-white rounded-3xl p-6 border border-slate-200 shadow-sm"
+                  className="bg-gradient-to-br from-white to-[#f7faff] rounded-3xl p-6 border border-slate-200 shadow-sm"
                 >
                   <h2 className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-4 flex items-center gap-2 justify-center sm:justify-start">
                     <Info size={16} className="text-indigo-500" /> Quy tắc học tập của bé
@@ -676,7 +674,7 @@ export default function App() {
           {/* Main Interaction Area */}
           <section className="flex-1 flex flex-col gap-6 overflow-hidden">
             {/* Mode Tabs */}
-            <div className="flex bg-white p-1 rounded-full border border-slate-200 self-start shadow-sm shrink-0 w-full lg:w-auto overflow-x-auto scrollbar-hide">
+            <div className="flex bg-gradient-to-br from-white to-[#f7faff] p-1 rounded-full border border-slate-200 self-start shadow-sm shrink-0 w-full lg:w-auto overflow-x-auto scrollbar-hide">
               {[
                 { id: 'reading', label: 'Bài Văn', icon: <BookOpen size={16} /> },
                 { id: 'dictation', label: 'Viết Chính Tả', icon: <Volume2 size={16} /> },
@@ -703,7 +701,7 @@ export default function App() {
             </div>
 
             {/* Content Display */}
-            <div className="flex-1 bg-white rounded-[32px] lg:rounded-[40px] border border-slate-200 shadow-sm relative overflow-hidden flex flex-col min-h-0">
+            <div className="flex-1 bg-gradient-to-br from-white to-[#f7faff] rounded-[32px] lg:rounded-[40px] border border-slate-200 shadow-sm relative overflow-hidden flex flex-col min-h-0">
               <AnimatePresence mode="wait">
                 {mode === 'reading' && (
                   <motion.div 
