@@ -11,7 +11,9 @@ import {
   SkipForward, 
   ChevronLeft,
   EyeOff,
-  Info
+  Info,
+  Home,
+  Settings
 } from 'lucide-react';
 
 // --- Types ---
@@ -60,6 +62,17 @@ export default function App() {
   // Question state
   const [userAnswers, setUserAnswers] = useState<(number | null)[]>([]);
   const [showResults, setShowResults] = useState(false);
+
+  // Settings state for pause time multiplier
+  const [pauseTimeMultiplier, setPauseTimeMultiplier] = useState<number>(() => {
+    const saved = localStorage.getItem('dictation_pause_multiplier');
+    return saved ? parseFloat(saved) : 1;
+  });
+  const [showSettings, setShowSettings] = useState(false);
+
+  useEffect(() => {
+    localStorage.setItem('dictation_pause_multiplier', String(pauseTimeMultiplier));
+  }, [pauseTimeMultiplier]);
 
   // Audio/TTS Refs
   const audioRef = useRef<HTMLAudioElement | null>(null);
@@ -282,7 +295,7 @@ export default function App() {
       processed.push({
         originalText: fullSegment,
         text: ttsText,
-        pauseTime: wordCount < 6 ? 6 : 10
+        pauseTime: Math.round((wordCount < 6 ? 6 : 10) * pauseTimeMultiplier)
       });
       i += 2;
     }
@@ -401,7 +414,7 @@ export default function App() {
         return {
           originalText: s.text,
           text: ttsText,
-          pauseTime: wordCount < 6 ? 6 : 10,
+          pauseTime: Math.round((wordCount < 6 ? 6 : 10) * pauseTimeMultiplier),
           audioClear: s.audioClear,
           audioWithPunc: s.audioWithPunc
         };
@@ -508,12 +521,27 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-[#F8FAFC] flex flex-col font-sans text-slate-800 antialiased lg:h-screen lg:overflow-hidden">
+    <div className="min-h-screen bg-gradient-to-br from-[#eef7ff] to-[#f8fcff] flex flex-col font-sans text-slate-800 antialiased lg:h-screen lg:overflow-hidden">
       {/* Header Section */}
       <header className="h-20 bg-white border-b border-slate-200 px-4 lg:px-8 flex items-center justify-between shrink-0">
         <div className="flex items-center gap-3 lg:gap-4">
-          <div className="w-10 h-10 lg:w-12 lg:h-12 bg-indigo-100 rounded-xl lg:rounded-2xl flex items-center justify-center shrink-0">
-            <BookOpen className="w-6 h-6 lg:w-7 lg:h-7 text-indigo-600" />
+          <a
+            href="https://kideschool.blogspot.com/p/tieng-viet.html"
+            className="p-2 rounded-full hover:bg-indigo-50 transition-colors text-slate-400 hover:text-indigo-600 flex items-center gap-1.5"
+            title="Về trang chủ Tiếng Việt vui học"
+          >
+            <Home className="w-5 h-5 lg:w-6 lg:h-6" />
+            <span className="text-xs font-bold hidden sm:inline">Trang chủ</span>
+          </a>
+          <button
+            onClick={() => setShowSettings(true)}
+            className="p-2 rounded-full hover:bg-indigo-50 transition-colors text-slate-400 hover:text-indigo-600"
+            title="Cài đặt cho phụ huynh"
+          >
+            <Settings className="w-5 h-5 lg:w-6 lg:h-6" />
+          </button>
+          <div className="w-10 h-10 lg:w-12 lg:h-12 bg-gradient-to-br from-[#5b8cff] to-[#7aa8ff] rounded-2xl flex items-center justify-center shrink-0">
+            <BookOpen className="w-6 h-6 lg:w-7 lg:h-7 text-white" />
           </div>
           <div>
             <h1 className="text-base lg:text-xl font-bold tracking-tight text-slate-900 line-clamp-1">Bé học tiếng Việt</h1>
@@ -552,7 +580,7 @@ export default function App() {
       </header>
 
       {!passage ? (
-        <main className="flex-1 overflow-y-auto p-4 lg:p-8 bg-[#F8FAFC] scrollbar-hide flex items-center justify-center">
+        <main className="flex-1 overflow-y-auto p-4 lg:p-8 scrollbar-hide flex items-center justify-center">
           <div className="max-w-xl w-full mx-auto space-y-8 py-4 lg:py-8">
             <div className="text-center space-y-4">
               <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-indigo-50 border border-indigo-100 text-indigo-600 text-xs font-bold rounded-full uppercase tracking-wider">
@@ -599,7 +627,7 @@ export default function App() {
                       <button
                         id="btn-random-lesson"
                         onClick={selectRandomLesson}
-                        className="w-full sm:w-auto px-8 py-5 bg-gradient-to-r from-indigo-500 via-purple-500 to-indigo-600 text-white rounded-2xl font-black text-base lg:text-lg hover:scale-105 active:scale-95 transition-all shadow-xl shadow-indigo-200 flex items-center justify-center gap-3 group focus:outline-none cursor-pointer"
+                        className="w-full sm:w-auto px-8 py-5 bg-gradient-to-r from-indigo-500 via-purple-500 to-indigo-600 text-white rounded-full font-black text-base lg:text-lg hover:scale-105 active:scale-95 transition-all shadow-xl shadow-indigo-200 flex items-center justify-center gap-3 group focus:outline-none cursor-pointer"
                       >
                         <span className="text-2xl animate-bounce">🎲</span>
                         <span>Mở Một Bài Học Ngẫu Nhiên</span>
@@ -642,12 +670,12 @@ export default function App() {
           </div>
         </main>
       ) : (
-        <main className="flex-1 flex flex-col gap-4 lg:gap-8 p-4 lg:p-8 overflow-hidden bg-[#F8FAFC]">
+        <main className="flex-1 flex flex-col gap-4 lg:gap-8 p-4 lg:p-8 overflow-hidden">
 
           {/* Main Interaction Area */}
           <section className="flex-1 flex flex-col gap-6 overflow-hidden">
             {/* Mode Tabs */}
-            <div className="flex bg-white p-1 rounded-2xl border border-slate-200 self-start shadow-sm shrink-0 w-full lg:w-auto overflow-x-auto scrollbar-hide">
+            <div className="flex bg-white p-1 rounded-full border border-slate-200 self-start shadow-sm shrink-0 w-full lg:w-auto overflow-x-auto scrollbar-hide">
               {[
                 { id: 'reading', label: 'Bài Văn', icon: <BookOpen size={16} /> },
                 { id: 'dictation', label: 'Viết Chính Tả', icon: <Volume2 size={16} /> },
@@ -662,7 +690,7 @@ export default function App() {
                       setMode(tab.id as any);
                     }
                   }}
-                  className={`flex-1 lg:flex-none px-4 lg:px-6 py-2.5 rounded-xl text-xs lg:text-sm font-bold flex items-center justify-center gap-2 transition-all whitespace-nowrap ${
+                  className={`flex-1 lg:flex-none px-4 lg:px-6 py-2.5 rounded-full text-xs lg:text-sm font-bold flex items-center justify-center gap-2 transition-all whitespace-nowrap ${
                     mode === tab.id 
                       ? 'bg-slate-900 text-white shadow-md' 
                       : 'text-slate-400 hover:text-slate-600 hover:bg-slate-50'
@@ -828,13 +856,13 @@ export default function App() {
                             <div className="pt-4 flex flex-col sm:flex-row gap-3 justify-center">
                               <button
                                 onClick={selectRandomLesson}
-                                className="px-6 py-3 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl font-bold text-sm hover:scale-105 transition-all shadow-md focus:outline-none"
+                                className="px-6 py-3 bg-indigo-600 hover:bg-indigo-700 text-white rounded-full font-bold text-sm hover:scale-105 transition-all shadow-md focus:outline-none"
                               >
                                 🎲 Thử ngẫu nhiên bài khác
                               </button>
                               <button
                                 onClick={() => { setPassage(null); setTopic(''); }}
-                                className="px-6 py-3 bg-slate-100 hover:bg-slate-200 text-slate-600 rounded-xl font-bold text-sm hover:scale-105 transition-all focus:outline-none"
+                                className="px-6 py-3 bg-slate-100 hover:bg-slate-200 text-slate-600 rounded-full font-bold text-sm hover:scale-105 transition-all focus:outline-none"
                               >
                                 Quay về danh sách
                               </button>
@@ -948,7 +976,7 @@ export default function App() {
                                 <button 
                                   onClick={() => setShowResults(true)}
                                   disabled={userAnswers.includes(null)}
-                                  className="w-full lg:w-auto bg-slate-900 text-white px-10 lg:px-16 py-4 lg:py-5 rounded-2xl lg:rounded-3xl font-black text-base lg:text-lg hover:scale-105 transition-all shadow-xl shadow-slate-200 disabled:bg-slate-300 disabled:scale-100 disabled:shadow-none"
+                                  className="w-full lg:w-auto bg-slate-900 text-white px-10 lg:px-16 py-4 lg:py-5 rounded-full font-black text-base lg:text-lg hover:scale-105 transition-all shadow-xl shadow-slate-200 disabled:bg-slate-300 disabled:scale-100 disabled:shadow-none"
                                 >
                                   Hoàn thành bài tập
                                 </button>
@@ -966,13 +994,13 @@ export default function App() {
                                 <div className="flex flex-col sm:flex-row gap-3 lg:gap-4 justify-center">
                                   <button 
                                     onClick={() => { setPassage(null); setTopic(''); setShowResults(false); }}
-                                    className="bg-slate-900 text-white px-8 lg:px-10 py-4 lg:py-5 rounded-xl lg:rounded-2xl font-bold hover:scale-105 transition-all shadow-lg text-sm lg:text-base focus:outline-none"
+                                    className="bg-slate-900 text-white px-8 lg:px-10 py-4 lg:py-5 rounded-full font-bold hover:scale-105 transition-all shadow-lg text-sm lg:text-base focus:outline-none"
                                   >
                                     Bài học khác
                                   </button>
                                   <button 
                                     onClick={() => { setMode('reading'); setShowResults(false); setUserAnswers(passage ? passage.questions.map(() => null) : []); }}
-                                    className="bg-slate-100 text-slate-600 px-8 lg:px-10 py-4 lg:py-5 rounded-xl lg:rounded-2xl font-bold hover:bg-slate-200 transition-all font-medium text-sm lg:text-base focus:outline-none"
+                                    className="bg-slate-100 text-slate-600 px-8 lg:px-10 py-4 lg:py-5 rounded-full font-bold hover:bg-slate-200 transition-all font-medium text-sm lg:text-base focus:outline-none"
                                   >
                                     Xem lại bài
                                   </button>
@@ -1071,7 +1099,7 @@ export default function App() {
                     </div>
                     <button 
                       onClick={() => { stopDictation(); setMode('questions'); }}
-                      className="px-4 lg:px-8 py-2.5 lg:py-3 bg-indigo-50 text-indigo-600 rounded-xl lg:rounded-2xl font-black text-xs lg:text-sm hover:bg-indigo-100 transition-colors border border-indigo-100 shadow-sm"
+                      className="px-4 lg:px-8 py-2.5 lg:py-3 bg-indigo-50 text-indigo-600 rounded-full font-black text-xs lg:text-sm hover:bg-indigo-100 transition-colors border border-indigo-100 shadow-sm"
                     >
                       Kết thúc viết
                     </button>
@@ -1084,7 +1112,7 @@ export default function App() {
               <div className="h-auto py-4 lg:h-24 bg-white rounded-[24px] lg:rounded-[32px] border border-slate-200 flex items-center justify-center px-4 lg:px-10 shadow-sm shrink-0">
                   <button 
                     onClick={startDictation}
-                    className="w-full lg:w-auto px-8 lg:px-12 py-3 lg:py-4 bg-indigo-600 text-white rounded-xl lg:rounded-2xl font-black text-base lg:text-lg hover:scale-105 transition-all shadow-xl shadow-indigo-100 flex items-center justify-center gap-3"
+                    className="w-full lg:w-auto px-8 lg:px-12 py-3 lg:py-4 bg-indigo-600 text-white rounded-full font-black text-base lg:text-lg hover:scale-105 transition-all shadow-xl shadow-indigo-100 flex items-center justify-center gap-3"
                   >
                     <Volume2 size={20} /> Bắt đầu nghe chép
                   </button>
