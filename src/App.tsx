@@ -544,10 +544,7 @@ export default function App() {
           >
             <Settings className="w-5 h-5" />
           </button>
-          <div className="flex items-center gap-3 bg-white rounded-2xl shadow-sm border border-slate-100 pl-2 pr-4 py-1.5">
-            <div className="w-9 h-9 lg:w-10 lg:h-10 bg-gradient-to-br from-[#5b8cff] to-[#7aa8ff] rounded-xl flex items-center justify-center shrink-0">
-              <BookOpen className="w-5 h-5 text-white" />
-            </div>
+          <div className="flex items-center gap-3 bg-white/80 backdrop-blur-sm rounded-2xl shadow-sm border border-slate-100 pl-3 pr-4 py-1.5">
             <h1 className="font-display text-base lg:text-lg font-bold text-slate-900">
               Bé học tiếng Việt
             </h1>
@@ -1022,30 +1019,6 @@ export default function App() {
             {/* Playback Controls Area */}
             {mode === 'dictation' && (
               <div className="flex flex-col gap-3 shrink-0">
-                {/* 2 Nút chọn chế độ đọc chính tả */}
-                <div className="flex justify-center items-center gap-3">
-                  <button
-                    onClick={() => setDictationVoiceType('withPunc')}
-                    className={`min-w-[150px] justify-center px-5 py-2.5 rounded-full text-sm font-bold flex items-center gap-2 transition-colors ${
-                      dictationVoiceType === 'withPunc'
-                        ? 'bg-indigo-600 text-white shadow-md'
-                        : 'bg-white text-slate-500 border border-slate-200'
-                    }`}
-                  >
-                    <span>✍️ Đọc có dấu</span>
-                  </button>
-                  <button
-                    onClick={() => setDictationVoiceType('clear')}
-                    className={`min-w-[150px] justify-center px-5 py-2.5 rounded-full text-sm font-bold flex items-center gap-2 transition-colors ${
-                      dictationVoiceType === 'clear'
-                        ? 'bg-indigo-600 text-white shadow-md'
-                        : 'bg-white text-slate-500 border border-slate-200'
-                    }`}
-                  >
-                    <span>🗣️ Đọc không dấu</span>
-                  </button>
-                </div>
-
                 {/* Thanh điều khiển chính */}
                 <div className="h-auto py-4 lg:h-24 bg-white rounded-[24px] lg:rounded-[32px] border border-slate-200 flex flex-col md:flex-row items-center justify-between px-4 lg:px-10 shadow-sm gap-4">
                   <button 
@@ -1129,7 +1102,114 @@ export default function App() {
       <footer className="h-10 lg:h-12 border-t border-slate-100 px-4 lg:px-8 hidden sm:flex items-center justify-center bg-white text-[10px] lg:text-[11px] text-slate-400 shrink-0 font-medium">
         <span className="font-medium text-slate-500 italic text-center">“Học tập là chìa khóa mở ra kho báu tri thức.”</span>
       </footer>
+      {/* Settings Modal */}
+      <AnimatePresence>
+        {showSettings && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 bg-black/40 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+            onClick={() => setShowSettings(false)}
+          >
+            <motion.div
+              initial={{ scale: 0.95, opacity: 0, y: 20 }}
+              animate={{ scale: 1, opacity: 1, y: 0 }}
+              exit={{ scale: 0.95, opacity: 0, y: 20 }}
+              onClick={(e) => e.stopPropagation()}
+              className="bg-white rounded-3xl shadow-2xl border border-slate-100 w-full max-w-md overflow-hidden"
+            >
+              <div className="p-6 border-b border-slate-100 flex items-center justify-between">
+                <h2 className="text-xl font-bold text-slate-900">Cài đặt</h2>
+                <button
+                  onClick={() => setShowSettings(false)}
+                  className="w-8 h-8 rounded-full hover:bg-slate-100 flex items-center justify-center text-slate-400 hover:text-slate-600 transition-colors"
+                >
+                  ✕
+                </button>
+              </div>
+              
+              <div className="p-6 space-y-6">
+                {/* Dictation Voice Type Buttons - moved from dictation section */}
+                <div>
+                  <h3 className="text-sm font-bold text-slate-700 uppercase tracking-wider mb-3">Giọng đọc chính tả</h3>
+                  <div className="flex gap-3">
+                    <button
+                      onClick={() => setDictationVoiceType('withPunc')}
+                      className={`flex-1 justify-center px-5 py-3 rounded-full text-sm font-bold flex items-center gap-2 transition-colors ${
+                        dictationVoiceType === 'withPunc'
+                          ? 'bg-indigo-600 text-white shadow-md'
+                          : 'bg-white text-slate-500 border border-slate-200 hover:border-indigo-200'
+                      }`}
+                    >
+                      <span>✍️ Đọc có dấu</span>
+                    </button>
+                    <button
+                      onClick={() => setDictationVoiceType('clear')}
+                      className={`flex-1 justify-center px-5 py-3 rounded-full text-sm font-bold flex items-center gap-2 transition-colors ${
+                        dictationVoiceType === 'clear'
+                          ? 'bg-indigo-600 text-white shadow-md'
+                          : 'bg-white text-slate-500 border border-slate-200 hover:border-indigo-200'
+                      }`}
+                    >
+                      <span>🗣️ Đọc không dấu</span>
+                    </button>
+                  </div>
+                </div>
+
+                {/* Pause Time Multiplier */}
+                <div>
+                  <h3 className="text-sm font-bold text-slate-700 uppercase tracking-wider mb-3">Tốc độ nghỉ giữa câu</h3>
+                  <div className="flex items-center gap-4">
+                    <button
+                      onClick={() => setPauseTimeMultiplier(0.75)}
+                      className={`flex-1 py-2.5 rounded-xl text-sm font-bold transition-colors ${
+                        pauseTimeMultiplier === 0.75
+                          ? 'bg-indigo-600 text-white shadow-md'
+                          : 'bg-slate-100 text-slate-500 hover:bg-slate-200'
+                      }`}
+                    >
+                      Nhanh (0.75x)
+                    </button>
+                    <button
+                      onClick={() => setPauseTimeMultiplier(1)}
+                      className={`flex-1 py-2.5 rounded-xl text-sm font-bold transition-colors ${
+                        pauseTimeMultiplier === 1
+                          ? 'bg-indigo-600 text-white shadow-md'
+                          : 'bg-slate-100 text-slate-500 hover:bg-slate-200'
+                      }`}
+                    >
+                      Chuẩn (1x)
+                    </button>
+                    <button
+                      onClick={() => setPauseTimeMultiplier(1.5)}
+                      className={`flex-1 py-2.5 rounded-xl text-sm font-bold transition-colors ${
+                        pauseTimeMultiplier === 1.5
+                          ? 'bg-indigo-600 text-white shadow-md'
+                          : 'bg-slate-100 text-slate-500 hover:bg-slate-200'
+                      }`}
+                    >
+                      Chậm (1.5x)
+                    </button>
+                  </div>
+                  <p className="text-xs text-slate-400 mt-2 text-center">
+                    Điều chỉnh thời gian nghỉ giữa các đoạn khi nghe chép chính tả
+                  </p>
+                </div>
+              </div>
+
+              <div className="p-4 bg-slate-50 border-t border-slate-100">
+                <button
+                  onClick={() => setShowSettings(false)}
+                  className="w-full py-3 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl font-bold transition-colors"
+                >
+                  Đóng
+                </button>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
-

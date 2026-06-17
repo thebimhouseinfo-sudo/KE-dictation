@@ -1,55 +1,76 @@
-```
+```gitignore
 # Dependencies
 node_modules/
 
-# Environment
-.env
-.env.local
-.env.*
-
-# Logs
-*.log
-
-# Temporary files
-*.tmp
-*.swp
-*.swo
-
-# IDE
-.vscode/
-.idea/
-
-# Build artifacts
+# Build outputs
 dist/
 build/
 target/
-*.o
-*.obj
-*.out
-*.a
-*.so
-*.dll
-*.exe
 
 # Python
 __pycache__/
 *.pyc
 *.pyo
 *.pyd
+*.py.class
+*.py.obj
+.Python
+env/
+venv/
+.venv/
+.ENV
+.env
+.env.local
+.env.*
+.envrc
 .pytest_cache/
-.mypy_cache/
 .coverage
 htmlcov/
+.mypy_cache/
+.hypothesis/
 
-# Compressed files
+# Logs
+*.log
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+*.tmp
+
+# Environment variable files
+.env
+.env.local
+.env.*
+
+# Coverage directory used by tools like istanbul
+coverage/
+lib-cov/
+
+# Temporary folders
+tmp/
+temp/
+
+# Compressed archives
 *.zip
+*.tar.gz
+*.tar.bz2
+*.tar.xz
 *.gz
-*.tar
-*.tgz
+*.rar
+*.7z
 *.bz2
 *.xz
-*.7z
-*.rar
 *.zst
 *.lz4
 *.lzh
@@ -60,13 +81,302 @@ htmlcov/
 *.Z
 *.lz
 *.lzo
-*.tar.gz
-*.tar.bz2
-*.tar.xz
-*.tar.zst
 
-# OS
-.DS_Store
-Thumbs.db
+# Compiled binary files
+*.exe
+*.dll
+*.so
+*.a
+*.obj
+*.out
+*.class
 
+# Webpack and bundlers
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Docker
+.dockerenv
+
+# Git
+.git/
+
+# Bower dependency directory (if you still use bower)
+bower_components/
+
+# Jspm dependency directory
+jspm_packages/
+
+# Grunt intermediate storage (https://gruntjs.com/creating-plugins#storing-task-files)
+.grunt
+
+# Karma
+.karma
+
+# Sass
+.sass-cache
+
+# Code coverage
+coverage/
+*.lcov
+
+# ESLint
+eslint-cache
+
+# Prettier
+.prettierignore
+
+# TypeScript
+*.tsbuildinfo
+dist/
+out/
+
+# Next.js
+.next/
+out/
+
+# Nuxt.js
+.nuxt/
+dist/
+
+# Gatsby
+.cache/
+public/
+
+# Vue
+dist/
+.output.js
+
+# Angular
+dist/
+output/
+.angular/
+
+# React
+build/
+
+# Java
+*.class
+*.jar
+*.war
+*.ear
+*.nar
+target/
+.gradle/
+build/
+
+# C#
+bin/
+obj/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# C++
+*.o
+*.a
+*.la
+*.lo
+*.so
+*.so.*
+*.dylib
+*.dll
+*.exe
+*.out
+*.app
+*.App
+*.pyc
+*.pyo
+*.pyd
+*.py.class
+*.py.obj
+*.py.out
+*.class
+*.jar
+*.war
+*.ear
+*.nar
+*.dll
+*.so
+*.a
+*.obj
+*.out
+*.exe
+*.o
+*.pyc
+*.pyo
+*.pyd
+*.py.class
+*.py.obj
+*.py.out
+*.class
+*.jar
+*.war
+*.ear
+*.nar
+*.dll
+*.so
+*.a
+*.obj
+*.out
+*.exe
+*.o
+
+# Ruby
+*.gem
+*.rbc
+*.sassc
+.rbx
+.bundle
+vendor/bundle
+.rubocop.yml
+.rubocop
+.rubycritic
+.ruby-gemset
+.ruby-version
+
+# PHP
+vendor/
+composer.lock
+.php_cs.cache
+
+# Go
+*.exe
+*.exe~
+*.dll
+*.so
+*.so.*
+*.dylib
+*.test
+*.prof
+*.out
+*.pyc
+*.pyo
+*.pyd
+*.py.class
+*.py.obj
+*.py.out
+*.class
+*.jar
+*.war
+*.ear
+*.nar
+*.dll
+*.so
+*.a
+*.obj
+*.out
+*.exe
+*.o
+
+# Rust
+*.o
+*.obj
+*.exe
+*.pdb
+*.dll
+*.dylib
+*.so
+*.a
+target/
+Cargo.lock
+
+# Swift
+*.xcodeproj
+*.xcworkspace
+*.swiftmodule
+*.swiftdoc
+*.xcuserstate
+xcuserdata/
+DerivedData/
+.swiftlint.yml
+
+# Kotlin
+*.class
+*.jar
+*.war
+*.ear
+*.nar
+*.kotlin_module
+*.kotlin_metadata
+*.kotlin_builtins
+*.kotlin_multiplatform
+*.kotlin_facade
+*.kotlin_js_meta
+*.kotlin_package
+*.kotlin_properties
+*.kotlin_dce_js
+*.kotlin_dce_metadata
+*.kotlin_dce_ir
+*.kotlin_dce_js_meta
+*.kotlin_dce_js_metadata
+*.kotlin_dce_js_facade
+*.kotlin_dce_js_package
+*.kotlin_dce_js_properties
+*.kotlin_dce_js_multiplatform
+*.kotlin_dce_js_builtins
+*.kotlin_dce_js_module
+*.kotlin_dce_js_metadata
+*.kotlin_dce_js_facade
+*.kotlin_dce_js_package
+*.kotlin_dce_js_properties
+*.kotlin_dce_js_multiplatform
+*.kotlin_dce_js_builtins
+*.kotlin_dce_js_module
+*.kotlin_dce_js_metadata
+*.kotlin_dce_js_facade
+*.kotlin_dce_js_package
+*.kotlin_dce_js_properties
+*.kotlin_dce_js_multiplatform
+*.kotlin_dce_js_builtins
+*.kotlin_dce_js_module
+*.kotlin_dce_js_metadata
+*.kotlin_dce_js_facade
+*.kotlin_dce_js_package
+*.kotlin_dce_js_properties
+*.kotlin_dce_js_multiplatform
+*.kotlin_dce_js_builtins
+*.kotlin_dce_js_module
+*.kotlin_dce_js_metadata
+*.kotlin_dce_js_facade
+*.kotlin_dce_js_package
+*.kotlin_dce_js_properties
+*.kotlin_dce_js_multiplatform
+*.kotlin_dce_js_builtins
+*.kotlin_dce_js_module
+*.kotlin_dce_js_metadata
+*.kotlin_dce_js_facade
+*.kotlin_dce_js_package
+*.kotlin_dce_js_properties
+*.kotlin_dce_js_multiplatform
+*.kotlin_dce_js_builtins
+*.kotlin_dce_js_module
+*.kotlin_dce_js_metadata
+*.kotlin_dce_js_facade
+*.kotlin_dce_js_package
+*.kotlin_dce_js_properties
+*.kotlin_dce_js_multiplatform
+*.kotlin_dce_js_builtins
+*.kotlin_dce_js_module
+*.kotlin_dce_js_metadata
+*.kotlin_dce_js_facade
+*.kotlin_dce_js_package
+*.kotlin_dce_js_properties
+*.kotlin_dce_js_multiplatform
+*.kotlin_dce_js_builtins
+*.kotlin_dce_js_module
+*.kotlin_dce_js_metadata
+*.kotlin_dce_js_facade
+*.kotlin_dce_js_package
+*.kotlin_dce_js_properties
+*.kotlin_dce_js_multiplatform
+*.kotlin_dce_js_builtins
+*.kotlin_dce_js_module
+*.kotlin_dce_js_metadata
+*.kotlin_dce_js_facade
+*.kotlin_dce_js_package
+*.kotlin_dce_js_properties
+*.kotlin_dce_js......
 ```
