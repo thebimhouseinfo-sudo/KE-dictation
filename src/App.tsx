@@ -505,21 +505,6 @@ export default function App() {
     setUserAnswers(newAnswers);
   };
 
-  const calculateScore = () => {
-    if (!passage) return 0;
-    return userAnswers.reduce((score, ans, idx) => {
-      const q = passage.questions[idx];
-      if (!q) return score;
-      const isMultipleChoice = Array.isArray(q.options) && q.options.length > 0;
-      if (isMultipleChoice) {
-        return ans === q.answer ? score + 1 : score;
-      } else {
-        // For open-ended questions, if they revealed the answer (ans === 1), count as checked/correct
-        return ans === 1 ? score + 1 : score;
-      }
-    }, 0);
-  };
-
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#eef7ff] to-[#f8fcff] flex flex-col font-sans text-slate-800 antialiased lg:h-screen lg:overflow-hidden relative">
       {/* Decorative blur circles */}
@@ -987,9 +972,9 @@ export default function App() {
                                 animate={{ opacity: 1, scale: 1 }}
                                 className="pt-8 text-center p-6 lg:p-12 bg-white rounded-[32px] lg:rounded-[48px] border-2 border-slate-100 shadow-sm mb-8"
                               >
-                                <h4 className="text-2xl lg:text-3xl font-black text-slate-900 mb-2">Kết quả bài tập</h4>
+                                <h4 className="text-2xl lg:text-3xl font-black text-slate-900 mb-2">Đã xem hết các câu trả lời</h4>
                                 <p className="text-base lg:text-lg text-slate-500 font-medium mb-8 lg:mb-10">
-                                  Bé đã hoàn thành bài tập với số câu đúng: <span className="text-indigo-600 font-black text-xl lg:text-2xl">{calculateScore()}/{passage?.questions.length || 0}</span>
+                                  Cùng xem lại các câu trả lời ở trên để biết câu nào đúng, câu nào cần ôn lại nhé!
                                 </p>
                                 <div className="flex flex-col sm:flex-row gap-3 lg:gap-4 justify-center">
                                   <button 
