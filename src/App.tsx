@@ -733,9 +733,9 @@ export default function App() {
                         ))}
                       </div>
                     </div>
-                    <div className="flex flex-col items-center gap-4">
+                    <div className="flex flex-col items-center gap-4 w-full">
                       {countdown > 0 && (
-                        <div className="w-fit bg-indigo-600 text-white px-4 py-1.5 rounded-xl flex flex-col items-center justify-center shadow-lg">
+                        <div className="w-fit bg-indigo-600 text-white px-4 py-1.5 rounded-xl flex flex-col items-center justify-center shadow-lg absolute -top-2 -right-2 z-10">
                           <span className="text-[8px] lg:text-[10px] font-bold uppercase opacity-70">Nghỉ</span>
                           <span className="text-lg lg:text-2xl font-black">{countdown}s</span>
                         </div>
