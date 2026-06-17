@@ -1,80 +1,21 @@
-```gitignore
+```
 # Dependencies
 node_modules/
 
-# Build outputs
+# Build artifacts
 dist/
-build/
-target/
+
+# Environment
+.env
+.env.local
+.env.*
+
+# Editors
+.vscode/
+.idea/
 
 # Logs
 *.log
-
-# Environment variables
-.env
-.env.local
-*.env.*
-
-# IDE specific
-.vscode/
-.idea/
-*.swp
-*.swo
-
-# Python specific
-__pycache__/
-*.pyc
-*.pyo
-*.pyd
-.Python
-*.so
-*.egg-info/
-.eggs/
-.venv/
-venv/
-.envrc
-
-# Temporary files
-*.tmp
-*.temp
-*~
-
-# OS generated files
-.DS_Store
-.DS_Store?
-._*
-.Spotlight-V100
-.Trashes
-ehthumbs.db
-Thumbs.db
-
-# Coverage reports
-coverage/
-htmlcov/
-.coverage
-
-# Testing
-.mypy_cache/
-.pytest_cache/
-.nyc_output/
-istanbul/
-*.lcov
-
-# Distribution / packaging
-*.tar.gz
-*.whl
-*.egg
-
-# Compiled Binary files
-*.exe
-*.dll
-*.so
-*.dylib
-*.class
-*.o
-*.obj
-*.a
-*.lib
 
 # Compressed files
 *.zip
@@ -99,4 +40,5 @@ istanbul/
 *.tar.bz2
 *.tar.xz
 *.tar.zst
+
 ```
