@@ -68,11 +68,21 @@ export default function App() {
     const saved = localStorage.getItem('dictation_pause_multiplier');
     return saved ? parseFloat(saved) : 1;
   });
-  const [showSettings, setShowSettings] = useState(false);
+
+  const [speechRate, setSpeechRate] = useState<number>(() => {
+    const saved = localStorage.getItem('dictation_speech_rate');
+    return saved ? parseFloat(saved) : 1;
+  });
+
+  useEffect(() => {
+    localStorage.setItem('dictation_speech_rate', String(speechRate));
+  }, [speechRate]);
 
   useEffect(() => {
     localStorage.setItem('dictation_pause_multiplier', String(pauseTimeMultiplier));
   }, [pauseTimeMultiplier]);
+
+  const [showSettings, setShowSettings] = useState(false);
 
   // Audio/TTS Refs
   const audioRef = useRef<HTMLAudioElement | null>(null);
@@ -314,11 +324,13 @@ export default function App() {
       const utterance = new SpeechSynthesisUtterance(text);
       utterance.lang = 'vi-VN';
       
+      let rate = speechRate;
+
       if (speed === 'slow') {
-        utterance.rate = 0.55;
-      } else {
-        utterance.rate = 0.85;
+        rate *= 0.75;
       }
+
+      utterance.rate = rate;
       
       utterance.onend = () => onEnd();
       utterance.onerror = (e) => {
@@ -355,6 +367,7 @@ export default function App() {
 
       if (customAudioPath) {
         audio.src = customAudioPath;
+        audio.playbackRate = speechRate;
       } else {
         const audioUrl = `api/tts-proxy?text=${encodeURIComponent(text)}${speed ? `&speed=${speed}` : ''}`;
         audio.src = audioUrl;
@@ -1007,30 +1020,6 @@ export default function App() {
             {/* Playback Controls Area */}
             {mode === 'dictation' && (
               <div className="flex flex-col gap-3 shrink-0">
-                {/* 2 Nút chọn chế độ đọc chính tả */}
-                <div className="flex justify-center items-center gap-3">
-                  <button
-                    onClick={() => setDictationVoiceType('withPunc')}
-                    className={`min-w-[150px] justify-center px-5 py-2.5 rounded-full text-sm font-bold flex items-center gap-2 transition-colors ${
-                      dictationVoiceType === 'withPunc'
-                        ? 'bg-indigo-600 text-white shadow-md'
-                        : 'bg-white text-slate-500 border border-slate-200'
-                    }`}
-                  >
-                    <span>✍️ Đọc có dấu</span>
-                  </button>
-                  <button
-                    onClick={() => setDictationVoiceType('clear')}
-                    className={`min-w-[150px] justify-center px-5 py-2.5 rounded-full text-sm font-bold flex items-center gap-2 transition-colors ${
-                      dictationVoiceType === 'clear'
-                        ? 'bg-indigo-600 text-white shadow-md'
-                        : 'bg-white text-slate-500 border border-slate-200'
-                    }`}
-                  >
-                    <span>🗣️ Đọc không dấu</span>
-                  </button>
-                </div>
-
                 {/* Thanh điều khiển chính */}
                 <div className="h-auto py-4 lg:h-24 bg-white rounded-[24px] lg:rounded-[32px] border border-slate-200 flex flex-col md:flex-row items-center justify-between px-4 lg:px-10 shadow-sm gap-4">
                   <button 
@@ -1114,6 +1103,109 @@ export default function App() {
       <footer className="h-10 lg:h-12 border-t border-slate-100 px-4 lg:px-8 hidden sm:flex items-center justify-center bg-white text-[10px] lg:text-[11px] text-slate-400 shrink-0 font-medium">
         <span className="font-medium text-slate-500 italic text-center">“Học tập là chìa khóa mở ra kho báu tri thức.”</span>
       </footer>
+
+      {/* Settings Modal */}
+      {showSettings \&\& (
+        <div
+          className="fixed inset-0 bg-black/30 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+          onClick={() => setShowSettings(false)}
+        >
+          <div
+            className="bg-white rounded-3xl p-6 w-full max-w-md shadow-2xl"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex items-center justify-between mb-6">
+              <h2 className="text-xl font-black text-slate-800">
+                ⚙️ Cài đặt
+              </h2>
+
+              <button
+                onClick={() => setShowSettings(false)}
+                className="text-slate-400 hover:text-slate-600"
+              >
+                ✕
+              </button>
+            </div>
+
+            {/* MODE ĐỌC */}
+            <div className="mb-6">
+              <div className="text-sm font-bold text-slate-700 mb-3">
+                Chế độ đọc
+              </div>
+
+              <div className="grid grid-cols-2 gap-3">
+                <button
+                  onClick={() => setDictationVoiceType('withPunc')}
+                  className={`rounded-xl p-3 border font-bold ${
+                    dictationVoiceType === 'withPunc'
+                      ? 'bg-indigo-600 text-white border-indigo-600'
+                      : 'bg-white border-slate-200'
+                  }`}
+                >
+                  Đọc có dấu
+                </button>
+
+                <button
+                  onClick={() => setDictationVoiceType('clear')}
+                  className={`rounded-xl p-3 border font-bold ${
+                    dictationVoiceType === 'clear'
+                      ? 'bg-indigo-600 text-white border-indigo-600'
+                      : 'bg-white border-slate-200'
+                  }`}
+                >
+                  Đọc không dấu
+                </button>
+              </div>
+            </div>
+
+            {/* THỜI GIAN NGHỈ */}
+            <div className="mb-6">
+              <div className="text-sm font-bold text-slate-700 mb-3">
+                Thời gian nghỉ
+              </div>
+
+              <div className="grid grid-cols-4 gap-2">
+                {[0.5, 1, 1.5, 2].map((v) => (
+                  <button
+                    key={v}
+                    onClick={() => setPauseTimeMultiplier(v)}
+                    className={`rounded-xl py-2 font-bold border ${
+                      pauseTimeMultiplier === v
+                        ? 'bg-indigo-600 text-white border-indigo-600'
+                        : 'bg-white border-slate-200'
+                    }`}
+                  >
+                    {v}x
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* TỐC ĐỘ ĐỌC */}
+            <div>
+              <div className="text-sm font-bold text-slate-700 mb-3">
+                Tốc độ đọc
+              </div>
+
+              <div className="grid grid-cols-4 gap-2">
+                {[0.75, 1, 1.25, 1.5].map((v) => (
+                  <button
+                    key={v}
+                    onClick={() => setSpeechRate(v)}
+                    className={`rounded-xl py-2 font-bold border ${
+                      speechRate === v
+                        ? 'bg-indigo-600 text-white border-indigo-600'
+                        : 'bg-white border-slate-200'
+                    }`}
+                  >
+                    {v}x
+                  </button>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
