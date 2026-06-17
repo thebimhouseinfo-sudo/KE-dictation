@@ -521,33 +521,36 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#eef7ff] to-[#f8fcff] flex flex-col font-sans text-slate-800 antialiased lg:h-screen lg:overflow-hidden">
+    <div className="min-h-screen bg-gradient-to-br from-[#eef7ff] to-[#f8fcff] flex flex-col font-sans text-slate-800 antialiased lg:h-screen lg:overflow-hidden relative">
+      {/* Decorative blur circles */}
+      <div className="fixed -top-12 -left-12 w-44 h-44 rounded-full bg-[#bcd4ff] opacity-30 blur-2xl pointer-events-none" />
+      <div className="fixed top-[55%] -right-12 w-36 h-36 rounded-full bg-[#a9e7ff] opacity-30 blur-2xl pointer-events-none" />
+      <div className="fixed bottom-10 left-12 w-24 h-24 rounded-full bg-[#d7cbff] opacity-30 blur-2xl pointer-events-none" />
+      
       {/* Header Section */}
-      <header className="h-20 bg-white border-b border-slate-200 px-4 lg:px-8 flex items-center justify-between shrink-0">
+      <header className="h-20 bg-white border-b border-slate-200 px-4 lg:px-8 flex items-center justify-between shrink-0 relative z-10">
         <div className="flex items-center gap-3 lg:gap-4">
-          <a
-            href="https://kideschool.blogspot.com/p/tieng-viet.html"
-            className="p-2 rounded-full hover:bg-indigo-50 transition-colors text-slate-400 hover:text-indigo-600 flex items-center gap-1.5"
-            title="Về trang chủ Tiếng Việt vui học"
+          <button
+            onClick={() => { setPassage(null); setTopic(''); stopDictation(); }}
+            className="w-10 h-10 rounded-full bg-white shadow-sm border border-slate-100 flex items-center justify-center text-slate-500 hover:text-indigo-600 hover:border-indigo-100 transition-colors"
+            title="Trang chủ"
           >
-            <Home className="w-5 h-5 lg:w-6 lg:h-6" />
-            <span className="text-xs font-bold hidden sm:inline">Trang chủ</span>
-          </a>
+            <Home className="w-5 h-5" />
+          </button>
           <button
             onClick={() => setShowSettings(true)}
-            className="p-2 rounded-full hover:bg-indigo-50 transition-colors text-slate-400 hover:text-indigo-600"
-            title="Cài đặt cho phụ huynh"
+            className="w-10 h-10 rounded-full bg-white shadow-sm border border-slate-100 flex items-center justify-center text-slate-500 hover:text-indigo-600 hover:border-indigo-100 transition-colors"
+            title="Cài đặt"
           >
-            <Settings className="w-5 h-5 lg:w-6 lg:h-6" />
+            <Settings className="w-5 h-5" />
           </button>
-          <div className="w-10 h-10 lg:w-12 lg:h-12 bg-gradient-to-br from-[#5b8cff] to-[#7aa8ff] rounded-2xl flex items-center justify-center shrink-0">
-            <BookOpen className="w-6 h-6 lg:w-7 lg:h-7 text-white" />
-          </div>
-          <div>
-            <h1 className="text-base lg:text-xl font-bold tracking-tight text-slate-900 line-clamp-1">Bé học tiếng Việt</h1>
-            <p className="text-[10px] lg:text-xs text-slate-500 font-medium line-clamp-1">
-              {passage ? `Chủ đề: ${passage.title}` : 'Giáo án tiếng Việt của bé'}
-            </p>
+          <div className="flex items-center gap-3 bg-white rounded-2xl shadow-sm border border-slate-100 pl-2 pr-4 py-1.5">
+            <div className="w-9 h-9 lg:w-10 lg:h-10 bg-gradient-to-br from-[#5b8cff] to-[#7aa8ff] rounded-xl flex items-center justify-center shrink-0">
+              <BookOpen className="w-5 h-5 text-white" />
+            </div>
+            <h1 className="font-display text-base lg:text-lg font-bold text-slate-900">
+              Bé học tiếng Việt
+            </h1>
           </div>
         </div>
         
@@ -745,22 +748,22 @@ export default function App() {
                         ))}
                       </div>
                     </div>
-
-                    <div className="w-32 h-32 lg:w-40 lg:h-40 bg-white rounded-[40px] lg:rounded-[48px] flex items-center justify-center shadow-xl lg:shadow-2xl shadow-slate-200 relative">
-                       <motion.div
-                         animate={isDictating ? { scale: [1, 1.15, 1], opacity: [0.6, 1, 0.6] } : {}}
-                         transition={{ repeat: Infinity, duration: 1.5 }}
-                         className="text-indigo-600"
-                       >
-                         <EyeOff size={60} strokeWidth={1.5} />
-                       </motion.div>
-                       
-                       {countdown > 0 && (
-                        <div className="absolute -top-3 -right-3 lg:-top-4 lg:-right-4 w-12 h-12 lg:w-16 lg:h-16 bg-indigo-600 text-white rounded-xl lg:rounded-2xl flex flex-col items-center justify-center shadow-lg transform rotate-6 scale-110">
+                    <div className="flex flex-col items-center gap-4">
+                      {countdown > 0 && (
+                        <div className="w-fit bg-indigo-600 text-white px-4 py-1.5 rounded-xl flex flex-col items-center justify-center shadow-lg">
                           <span className="text-[8px] lg:text-[10px] font-bold uppercase opacity-70">Nghỉ</span>
                           <span className="text-lg lg:text-2xl font-black">{countdown}s</span>
                         </div>
-                       )}
+                      )}
+                      <div className="w-32 h-32 lg:w-40 lg:h-40 bg-white rounded-[40px] lg:rounded-[48px] flex items-center justify-center shadow-xl lg:shadow-2xl shadow-slate-200 relative">
+                         <motion.div
+                           animate={isDictating ? { scale: [1, 1.15, 1], opacity: [0.6, 1, 0.6] } : {}}
+                           transition={{ repeat: Infinity, duration: 1.5 }}
+                           className="text-indigo-600"
+                         >
+                           <EyeOff size={60} strokeWidth={1.5} />
+                         </motion.div>
+                      </div>
                     </div>
 
                     <div className="text-center space-y-2 lg:space-y-3 max-w-md">
@@ -1021,22 +1024,22 @@ export default function App() {
               <div className="flex flex-col gap-3 shrink-0">
                 {/* 2 Nút chọn chế độ đọc chính tả */}
                 <div className="flex justify-center items-center gap-3">
-                  <button 
+                  <button
                     onClick={() => setDictationVoiceType('withPunc')}
-                    className={`px-5 py-2.5 rounded-full text-xs font-bold transition-all border-2 cursor-pointer flex items-center gap-2 focus:outline-none ${
-                      dictationVoiceType === 'withPunc' 
-                        ? 'bg-indigo-600 border-indigo-600 text-white shadow-md shadow-indigo-100 font-black' 
-                        : 'bg-white border-slate-200 text-slate-500 hover:text-slate-700 hover:bg-slate-50'
+                    className={`min-w-[150px] justify-center px-5 py-2.5 rounded-full text-sm font-bold flex items-center gap-2 transition-colors ${
+                      dictationVoiceType === 'withPunc'
+                        ? 'bg-indigo-600 text-white shadow-md'
+                        : 'bg-white text-slate-500 border border-slate-200'
                     }`}
                   >
                     <span>✍️ Đọc có dấu</span>
                   </button>
-                  <button 
+                  <button
                     onClick={() => setDictationVoiceType('clear')}
-                    className={`px-5 py-2.5 rounded-full text-xs font-bold transition-all border-2 cursor-pointer flex items-center gap-2 focus:outline-none ${
-                      dictationVoiceType === 'clear' 
-                        ? 'bg-indigo-600 border-indigo-600 text-white shadow-md shadow-indigo-100 font-black' 
-                        : 'bg-white border-slate-200 text-slate-500 hover:text-slate-700 hover:bg-slate-50'
+                    className={`min-w-[150px] justify-center px-5 py-2.5 rounded-full text-sm font-bold flex items-center gap-2 transition-colors ${
+                      dictationVoiceType === 'clear'
+                        ? 'bg-indigo-600 text-white shadow-md'
+                        : 'bg-white text-slate-500 border border-slate-200'
                     }`}
                   >
                     <span>🗣️ Đọc không dấu</span>
