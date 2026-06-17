@@ -1,91 +1,72 @@
-```gitignore
+```
 # Dependencies
 node_modules/
 
-# Build outputs
+# Environment
+.env
+.env.local
+.env.*
+
+# Logs
+*.log
+
+# Temporary files
+*.tmp
+*.swp
+*.swo
+
+# IDE
+.vscode/
+.idea/
+
+# Build artifacts
 dist/
 build/
 target/
+*.o
+*.obj
+*.out
+*.a
+*.so
+*.dll
+*.exe
 
 # Python
 __pycache__/
 *.pyc
 *.pyo
 *.pyd
-*.pyc.*
-*.pyo.*
-.Python
-env/
-venv/
-.venv/
-.ENV
-.python-version
+.pytest_cache/
+.mypy_cache/
+.coverage
+htmlcov/
 
-# Logs
-*.log
+# Compressed files
+*.zip
+*.gz
+*.tar
+*.tgz
+*.bz2
+*.xz
+*.7z
+*.rar
+*.zst
+*.lz4
+*.lzh
+*.cab
+*.arj
+*.rpm
+*.deb
+*.Z
+*.lz
+*.lzo
+*.tar.gz
+*.tar.bz2
+*.tar.xz
+*.tar.zst
 
-# OS generated files
+# OS
 .DS_Store
-.DS_Store?
-._*
-.Spotlight-V100
-.Trashes
-ehthumbs.db
 Thumbs.db
 
-# Environment variables
-.env
-.env.local
-.env.*
-
-# IDE
-.vscode/
-.idea/
-*.swp
-*.swo
-
-# Testing
-.coverage
-coverage/
-htmlcov/
-.nyc_output/
-.mypy_cache/
-.pytest_cache/
-.hypothesis/
-
-# Distribution / packaging
-*.tar.gz
-*.whl
-pip-log.txt
-pip-delete-this-directory.txt
-
-# Node
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-
-# Compiled
-*.class
-*.o
-*.a
-*.obj
-*.so
-*.dll
-*.exe
-*.out
-
-# Temporary files
-*.tmp
-*.temp
-*~
 ```
-
-Wait, I need to reconsider. Looking at the file changes again:
-
-Added files: []
-Deleted files: []
-Modified files: ['index.html', 'src/App.tsx', 'src/index.css']
-
-These are all source code files (.html, .tsx, .css). There are no build artifacts, dependency directories, temporary files, or other things that should be ignored in the changes provided.
-
-Output: (empty)
