@@ -528,13 +528,15 @@ export default function App() {
       {/* Header Section */}
       <header className="h-20 bg-gradient-to-r from-[#5b8cff] to-[#7aa8ff] px-4 lg:px-8 flex items-center justify-between shrink-0 relative z-10">
         <div className="flex items-center gap-3 lg:gap-4">
-          <button
-            onClick={() => { setPassage(null); setTopic(''); stopDictation(); }}
+          <a
+            href="https://kideschool.blogspot.com/p/tieng-viet.html"
+            target="_blank"
+            rel="noopener noreferrer"
             className="w-10 h-10 rounded-full bg-white/20 border border-white/20 flex items-center justify-center text-white hover:bg-white/30 backdrop-blur transition-colors"
             title="Trang chủ"
           >
             <Home className="w-5 h-5" />
-          </button>
+          </a>
           <button
             onClick={() => setShowSettings(true)}
             className="w-10 h-10 rounded-full bg-white/20 border border-white/20 flex items-center justify-center text-white hover:bg-white/30 backdrop-blur transition-colors"
