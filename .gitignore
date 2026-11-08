@@ -1,8 +1,10 @@
-```
-# Dependencies
 node_modules/
-# Build artifacts
 dist/
-# Package lock
+build/
 package-lock.json
-```desktop.ini
+.env
+.env.*
+!.env.example
+.DS_Store
+Thumbs.db
+desktop.ini
